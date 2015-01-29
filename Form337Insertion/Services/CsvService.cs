@@ -19,7 +19,8 @@ namespace Form337Insertion.Services
                 CsvConfiguration config = new CsvConfiguration();
                 config.RegisterClassMap<MasterRecordClassMap>();
                 var csv = new CsvReader(reader, config);
-                var records = csv.GetRecords<MasterRecord>().ToList();
+                List<MasterRecord> records = csv.GetRecords<MasterRecord>().ToList();
+                MasterRecord chubby = records.Where(rec => rec.n_number == "145WK").FirstOrDefault();
             }
         }
     }
