@@ -37,6 +37,9 @@
     <Reference Include="CsvHelper">
       <HintPath>..\packages\CsvHelper.2.10.0\lib\net40-client\CsvHelper.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="itextsharp">
       <HintPath>..\packages\iTextSharp.5.5.4\lib\itextsharp.dll</HintPath>
     </Reference>
@@ -74,6 +77,7 @@
     <Compile Include="Models\MasterRecordClassMap.cs" />
     <Compile Include="Services\CsvService.cs" />
     <Compile Include="Services\PdfService.cs" />
+    <Compile Include="Services\WebFormService.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

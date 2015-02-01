@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Form337Insertion.Models;
 using Form337Insertion.Services;
 
 namespace Form337Insertion
@@ -24,9 +25,9 @@ namespace Form337Insertion
         public MainWindow()
         {
             InitializeComponent();
-
-            CsvService _service = new CsvService();
-            _service.ReadAllRecords();
+            WebFormService _service = new WebFormService();
+            MasterRecord record = _service.RetrieveRegistrationInfo("4868E");
+            PdfService.WriteToPdf(record);
         }
     }
 }
