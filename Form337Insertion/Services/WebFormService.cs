@@ -12,7 +12,7 @@ namespace Form337Insertion.Services
 {
     class WebFormService
     {
-        public MasterRecord RetrieveRegistrationInfo(string nNumber)
+        public LandingsRecord RetrieveRegistrationInfo(string nNumber)
         {
             string htmlReturn = SendRequest(nNumber);
             return ParseRequest(htmlReturn, nNumber);
@@ -37,10 +37,13 @@ namespace Form337Insertion.Services
             StreamReader sr = new StreamReader(res.GetResponseStream());
             string returnvalue = sr.ReadToEnd();
 
+            res.Close();
+            sr.Close();
+
             return returnvalue;
         }
 
-        private MasterRecord ParseRequest(string htmlReturn, string nNumber)
+        private LandingsRecord ParseRequest(string htmlReturn, string nNumber)
         {
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(htmlReturn);
@@ -48,22 +51,37 @@ namespace Form337Insertion.Services
             int startIndex = bTags.IndexOf(bTags.FirstOrDefault(record => record.InnerText.Contains(nNumber.ToUpper())));
             int currentIndex = startIndex;
 
-            MasterRecord masterRecord = new MasterRecord();
+            LandingsRecord landingsRecord = new LandingsRecord();
 
-            masterRecord.n_number = bTags[currentIndex++].InnerText;
-            masterRecord.serial_number = bTags[currentIndex++].InnerText;
-            masterRecord.kit_mfr = bTags[currentIndex++].InnerText;
-            masterRecord.kit_model = bTags[currentIndex++].InnerText;
-            masterRecord.type_engine = bTags[currentIndex++].InnerText;
-            masterRecord.eng_mfr_mdl = bTags[currentIndex++].InnerText;
-            masterRecord.year_mfr = bTags[currentIndex++].InnerText;
-            masterRecord.name = bTags[currentIndex++].InnerText;
-            masterRecord.street = bTags[currentIndex++].InnerText;
-            masterRecord.city = bTags[currentIndex++].InnerText;
-            masterRecord.type_registrant = bTags[currentIndex++].InnerText;
-            masterRecord.cert_issue_date = bTags[currentIndex++].InnerText;
+            landingsRecord.N_Number = bTags[currentIndex++].InnerText;
+            landingsRecord.Serial_Number = bTags[currentIndex++].InnerText;
+            landingsRecord.Mfr = bTags[currentIndex++].InnerText;
+            landingsRecord.Model = bTags[currentIndex++].InnerText;
+            landingsRecord.Eng_Mfr = bTags[currentIndex++].InnerText;
+            landingsRecord.Type_Engine = bTags[currentIndex++].InnerText;
+            landingsRecord.Year_Mfr = bTags[currentIndex++].InnerText;
+            landingsRecord.Name = bTags[currentIndex++].InnerText;
+            landingsRecord.Street = bTags[currentIndex++].InnerText;
+            landingsRecord.City = bTags[currentIndex++].InnerText;
+            landingsRecord.Type_Aircraft = bTags[currentIndex++].InnerText;
+            landingsRecord.Cert_Issue_Date = bTags[currentIndex++].InnerText;
+            landingsRecord.Classification = bTags[currentIndex++].InnerText;
+            landingsRecord.Aircraft_Category = bTags[currentIndex++].InnerText;
 
-            return masterRecord;
+            landingsRecord = FixAddressFields(landingsRecord);
+
+            return landingsRecord;
+        }
+
+        private LandingsRecord FixAddressFields(LandingsRecord record)
+        {
+            List<string> cityStateZip;
+            cityStateZip = record.City.Split(',').ToList<string>();
+            record.City = cityStateZip[0].Trim();
+            record.State = cityStateZip[1].Trim();
+            record.Zip_Code = cityStateZip[2].Trim();
+
+            return record;
         }
     }
 }

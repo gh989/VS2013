@@ -25,9 +25,6 @@ namespace Form337Insertion
         public MainWindow()
         {
             InitializeComponent();
-            WebFormService _service = new WebFormService();
-            MasterRecord record = _service.RetrieveRegistrationInfo("4868E");
-            PdfService.WriteToPdf(record);
         }
     }
 }

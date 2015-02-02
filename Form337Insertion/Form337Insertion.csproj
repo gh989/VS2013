@@ -73,11 +73,13 @@
     <Compile Include="Infrastructure\ObservableObject.cs" />
     <Compile Include="Infrastructure\PropertySupport.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
+    <Compile Include="Models\LandingsRecord.cs" />
     <Compile Include="Models\MasterRecord.cs" />
     <Compile Include="Models\MasterRecordClassMap.cs" />
     <Compile Include="Services\CsvService.cs" />
     <Compile Include="Services\PdfService.cs" />
     <Compile Include="Services\WebFormService.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -111,9 +113,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

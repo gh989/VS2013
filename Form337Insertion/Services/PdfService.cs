@@ -33,6 +33,28 @@ namespace Form337Insertion.Services
             }
         }
 
+        public static void WriteToPdf(LandingsRecord record, string filename)
+        {
+            using (PdfReader rdr = new PdfReader(@"C:\Users\Admin\Documents\Visual Studio 2013\Projects\Form337Insertion\FAA_Form_337.pdf"))
+            using (PdfStamper stamper = new PdfStamper(rdr, new System.IO.FileStream(filename, FileMode.Create)))
+            {
+                stamper.AcroFields.SetField("instructions and disposition of this form This report is required by law 49 USC 44701 Failure to report can result in a civil penalty for each",
+                                record.N_Number);
+                stamper.AcroFields.SetField("Serial No", record.Serial_Number);
+                stamper.AcroFields.SetField("Make", record.Mfr);
+                stamper.AcroFields.SetField("Model", record.Model);
+                stamper.AcroFields.SetField("Name As shown on registration certificate", record.Name);
+                stamper.AcroFields.SetField("Address", record.Street);
+                stamper.AcroFields.SetField("City", record.City);
+                stamper.AcroFields.SetField("State", record.State);
+                stamper.AcroFields.SetField("Zip", record.Zip_Code);
+                stamper.AcroFields.SetField("Identify with aircraft nationality and registration mark and date work completed 2", record.N_Number);
+
+                stamper.Close();
+                rdr.Close();
+            }
+        }
+
 
     }
 }

@@ -1,8 +1,112 @@
 ﻿<Window x:Class="Form337Insertion.MainWindow"
+        xmlns:local="clr-namespace:Form337Insertion.ViewModels"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525">
+    
+    <Window.DataContext>
+        <local:MainWindowViewModel />
+    </Window.DataContext>
+    
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <Menu Grid.Row="0"
+              Width="Auto"
+              Height="20"
+              VerticalAlignment="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Settings" />
+                <MenuItem Header="_Close" />
+            </MenuItem>
+        </Menu>
+        
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            
+            <Label Grid.Column="0"
+                   Margin="5"
+                   Content="N-Number" />
+            <Label Grid.Column="1"
+                   Margin="5,5,0,5"
+                   HorizontalAlignment="Right"
+                   Content="N" />
+            <TextBox Grid.Column="2"
+                     Margin="0,5,5,5"
+                     HorizontalAlignment="Left"
+                     Width="150" 
+                     Text="{Binding Path=NNumberToSearch,
+                                    Mode=TwoWay,
+                                    UpdateSourceTrigger=PropertyChanged}"/>
+            
+        </Grid>
+        
+        <Grid Grid.Row="2"
+              Margin="5" >
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            
+            <TextBlock x:Name="MakeModelTextBox"
+                       Grid.Row="0"
+                       HorizontalAlignment="Left"
+                       Text="{Binding Path=MakeModel}"/>
+            
+            <TextBlock x:Name="SerialNumberTextBox"
+                       Grid.Row="1"
+                       HorizontalAlignment="Left" 
+                       Text="{Binding Path=ReturnedRecord.Serial_Number}"/>
+            
+            <TextBlock x:Name="OwnerNameTextBox"
+                       Grid.Row="2"
+                       HorizontalAlignment="Left"
+                       Text="{Binding Path=ReturnedRecord.Name}"/>
+            
+            <TextBlock x:Name="StreetAddressTextBox"
+                       Grid.Row="3"
+                       HorizontalAlignment="Left"
+                       Text="{Binding Path=ReturnedRecord.Street}"/>
+            
+            <TextBlock x:Name="CityStateZipTextBox"
+                       Grid.Row="4"
+                       HorizontalAlignment="Left"
+                       Text="{Binding Path=CityStateZip}"/>
+        </Grid>
+        
+        <StackPanel Grid.Row="3"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="5">
+            
+            <Button x:Name="LoadButton"
+                    Height="40"
+                    Width="60"
+                    Margin="5"
+                    Content="Load Info"
+                    Command="{Binding Path=LoadInfoCommand}"/>
+            
+            <Button x:Name="FillButton"
+                    Height="40"
+                    Width="60"
+                    Margin="5"
+                    Content="Fill PDF"
+                    Command="{Binding Path=FillPdfCommand}"/>
+            
+        </StackPanel>
         
     </Grid>
 </Window>
