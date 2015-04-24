@@ -33,10 +33,10 @@ namespace Form337Insertion.Services
             }
         }
 
-        public static void WriteToPdf(LandingsRecord record, string filename)
+        public static void WriteToPdf(LandingsRecord record, string inputPathFile, string outputPathFile)
         {
-            using (PdfReader rdr = new PdfReader(@"C:\Users\Admin\Documents\Visual Studio 2013\Projects\Form337Insertion\FAA_Form_337.pdf"))
-            using (PdfStamper stamper = new PdfStamper(rdr, new System.IO.FileStream(filename, FileMode.Create)))
+            using (PdfReader rdr = new PdfReader(inputPathFile))
+            using (PdfStamper stamper = new PdfStamper(rdr, new System.IO.FileStream(outputPathFile, FileMode.Create)))
             {
                 stamper.AcroFields.SetField("instructions and disposition of this form This report is required by law 49 USC 44701 Failure to report can result in a civil penalty for each",
                                 record.N_Number);

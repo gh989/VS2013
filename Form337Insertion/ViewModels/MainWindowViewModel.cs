@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace Form337Insertion.ViewModels
     {
         #region Private Fields
 
+        private ProfileModel profile;
         private string _nNumberToSearch;
         private LandingsRecord _returnedRecord;
         private WebFormService _webFormService;
@@ -75,8 +77,21 @@ namespace Form337Insertion.ViewModels
 
         private void FillPdfExecute()
         {
-            string fileName = String.Concat("FAA_Form_337_", ReturnedRecord.N_Number, ".pdf");
-            PdfService.WriteToPdf(ReturnedRecord, fileName);
+            string outputPathFile = Path.Combine(profile.PdfOutputLocation, BuildFileName());
+            PdfService.WriteToPdf(ReturnedRecord, profile.PdfInputLocation, outputPathFile);
+        }
+
+        private string BuildFileName()
+        {
+            StringBuilder fileName = new StringBuilder(Path.GetFileNameWithoutExtension(profile.OutputFileName));
+            if (profile.AppendNNumber)
+                fileName.Append(" " + ReturnedRecord.N_Number);
+            if (profile.AppendCustomerName)
+                fileName.Append(" " + ReturnedRecord.Name);
+            if (profile.AppendDate)
+                fileName.Append(" " + DateTime.Today.ToString("yyyy-MM-dd"));
+
+            return Path.ChangeExtension(fileName.ToString(), ".pdf");
         }
 
         #endregion
@@ -106,6 +121,19 @@ namespace Form337Insertion.ViewModels
         public MainWindowViewModel()
         {
             _webFormService = new WebFormService();
+            profile = new ProfileModel();
+
+            //profile.MechanicName = "Joe Bagadoughnuts";
+            //profile.MechanicAPNumber = "0123456789";
+            //profile.PdfInputLocation = @"FAA_Form_337.pdf";
+            //profile.PdfOutputLocation = "";
+            //profile.OutputFileName = "FAA_Form_337.pdf";
+            //profile.AppendNNumber = true;
+
+            //ProfileService.SaveProfile(profile, @"DefaultProfile.xml");
+
+            profile = ProfileService.LoadFileIntoProfile("DefaultProfile.xml");
+
         }
 
         #endregion
